@@ -34,7 +34,8 @@ var decodedSamples = [],
 var userForm = document.querySelector('[data-user-form]'),
 	usernameField = userForm.querySelector('[data-username-field]'),
 	userInstructions = document.querySelector('[data-user-instructions]'),
-	userInstrument = userInstructions.querySelector('[data-user-instrument]');
+	userInstrument = userInstructions.querySelector('[data-user-instrument]'),
+	userGrid = document.querySelector('[data-user-grid]');
 
 // apply color hit to screen and emit hit event to socket server
 function hit() {
@@ -151,6 +152,7 @@ socket.on('setMaster', () => {
 	console.log('setMaster');
 	loadSamples();
 	document.body.classList.add('master-client');
+	userGrid.classList.add('active');
 });
 
 // listen for setClient event, store client data, show username form
