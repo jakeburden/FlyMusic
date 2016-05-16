@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html class="ie8 oldie" lang="en"> <![endif]-->
+<!--[if IE 9]> <html class="ie9 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>Be Responsive To Change</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="/dist/app.css" />
+</head>
+<body>
+
+	<div class="user-instructions" data-user-instructions>
+		<p data-user-instrument></p>
+		<p>Tap anywhere on the screen to play your instrument.</p>
+	</div>
+
+	<form class="user-form" validate data-user-form>
+		<p>Pick a username</p>
+		<input class="user-form__input" data-username-field required type="text" placeholder="Username" />
+	</form>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/dist/app.js"></script>
+
+</body>
+</html>

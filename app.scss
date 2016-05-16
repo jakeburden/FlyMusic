@@ -1,0 +1,78 @@
+html,
+body {
+	font-family: 'Helvetica Neue';
+	height: 100%;
+	margin: 0;
+	position: relative;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.master-client {
+	background: #000;
+}
+
+.user-instructions {
+	display: none;
+	left: 50%;
+	position: absolute;
+	text-align: center;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.user-instructions--active {
+	display: block;
+}
+
+.user-form {
+	display: none;
+	left: 50%;
+	padding: 20px;
+	position: absolute;
+	text-align: center;
+	top: 50%;
+	transform: translate(-50%, -70%);
+	width: 90%;
+}
+
+.user-form--active {
+	display: block;
+}
+
+.user-form__input {
+	font-size: 22px;
+	width: 100%;
+}
+
+.hit {
+	height: 100%;
+	left: 0;
+	opacity: 0;
+	overflow: hidden;
+	padding: 20px;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	transition: opacity .3s;
+	width: 100%;
+	z-index: 2;
+}
+
+.hit--active {
+	opacity: .7;
+}
+
+.hit__username {
+	color: #fff;
+	font-size: 10vw;
+	margin: 0;
+	opacity: .5;
+	position: absolute;
+	text-transform: uppercase;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 100%;
+}

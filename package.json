@@ -1,0 +1,18 @@
+{
+  "name": "responsive-to-change",
+  "version": "0.0.0",
+  "description": "Be Responsive To Change",
+  "dependencies": {
+    "express": "^4.10.2",
+	"babel": "^5.8.23",
+    "browserify": "^11.2.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.4.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+	"socket.io": "^1.4.5",
+	"gulp-ruby-sass": "~1.0.1"
+  }
+}
