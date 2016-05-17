@@ -24,6 +24,8 @@ var userCount = [
 	false
 ];
 
+var clients = [];
+
 // store master client id when connected
 var master = false;
 
@@ -31,7 +33,7 @@ var master = false;
 app.use(express.static('public'));
 
 // socket connection initialized
-io.on('connection', (socket) => {
+io.on('connection', socket => {
 	console.log('a user connected');
 
 	// no master client specified so set now
@@ -49,7 +51,7 @@ io.on('connection', (socket) => {
 		userCount.every(function(count, index) {
 			if (!count) {
 				id = index;
-				userCount[index] = true;
+				userCount[index] = socket.id;
 				return false;
 			}
 
@@ -83,6 +85,9 @@ io.on('connection', (socket) => {
 	// socket disconnected
 	socket.on('disconnect', () => {
 		console.log('user disconnected');
+
+		const index = userCount.indexOf(socket.id);
+		userCount[index] = false;
 
 		// if client was master then reset master
 		if (socket.id === master) {
