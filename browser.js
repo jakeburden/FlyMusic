@@ -18,6 +18,7 @@ const socket = io();
 
 // user model
 const userData = {
+	id: 0,
 	color: '',
 	sample: {
 		name: '',
@@ -35,7 +36,8 @@ var userForm = document.querySelector('[data-user-form]'),
 	usernameField = userForm.querySelector('[data-username-field]'),
 	userInstructions = document.querySelector('[data-user-instructions]'),
 	userInstrument = userInstructions.querySelector('[data-user-instrument]'),
-	userGrid = document.querySelector('[data-user-grid]');
+	userGrid = document.querySelector('[data-user-grid]'),
+	userGridBlocks = userGrid.querySelectorAll('[data-user-block]');
 
 // apply color hit to screen and emit hit event to socket server
 function hit() {
@@ -73,7 +75,7 @@ function cutSampleHit(data) {
 }
 
 // create color block element and fade in/out with CSS
-function applyColorHit(data, noUser = false) {
+function applyColorHit(data, noUser = false, element = false) {
 	// create and append element
 	let hit = document.createElement('div');
 	hit.classList.add('hit');
@@ -84,7 +86,9 @@ function applyColorHit(data, noUser = false) {
 		hit.innerHTML = '<h2 class="hit__username">' + data.username + '</h2>';
 	}
 
-	document.body.appendChild(hit);
+	let el = element ? element : document.body;
+
+	el.appendChild(hit);
 
 	// add / remove active modifier class
 	setTimeout(() => {
@@ -159,6 +163,7 @@ socket.on('setMaster', () => {
 socket.on('setClient', (data) => {
 	console.log('setClient');
 	console.log(data);
+	userData.id = data.id;
 	userData.color = data.color;
 	userData.sample = data.sample;
 
@@ -171,7 +176,8 @@ socket.on('setClient', (data) => {
 socket.on('playSound', (data) => {
 	console.log('playSound');
 	console.log(data);
-	applyColorHit(data);
+	console.log(userGridBlocks[data.id]);
+	applyColorHit(data, false, userGridBlocks[data.id]);
 	applySampleHit(data);
 });
 

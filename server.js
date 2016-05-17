@@ -16,6 +16,18 @@
 	// get samples module
 	const samples = require('./libs/samples');
 
+	var userCount = [
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false
+	];
+
 	// store master client id when connected
 	var master = false;
 
@@ -35,9 +47,21 @@
 		// otherwise set as client with color and sample
 		} else {
 			let sample = samples.getRandom();
+			let id = 0;
 			console.log(sample);
 
+			userCount.every(function(count, index) {
+				if (!count) {
+					id = index;
+					userCount[index] = true;
+					return false;
+				}
+
+				return true;
+			});
+
 			socket.emit('setClient', {
+				id: id,
 				color: randomColor(),
 				sample: sample
 			});
