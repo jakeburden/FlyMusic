@@ -157,7 +157,12 @@ socket.on('setMaster', () => {
 	loadSamples();
 	document.body.classList.add('master-client');
 	userGrid.classList.add('active');
+	userForm.classList.remove('user-form--active');
 });
+
+window.master = function master() {
+	socket.emit('setMaster');
+};
 
 // listen for setClient event, store client data, show username form
 socket.on('setClient', (data) => {

@@ -35,7 +35,7 @@ app.use(express.static('public'));
 // socket connection initialized
 io.on('connection', socket => {
 	console.log('a user connected');
-
+	clients.push(socket);
 	// no master client specified so set now
 	if (!master) {
 		master = socket.id;
@@ -89,12 +89,21 @@ io.on('connection', socket => {
 		const index = userCount.indexOf(socket.id);
 		userCount[index] = false;
 
+		const client = userCount.indexOf(socket.id);
+      	userCount.splice(client, 1);
+
 		// if client was master then reset master
 		if (socket.id === master) {
 			master = false;
 			console.log('master disconnected');
 			console.log(master);
 		}
+	});
+
+	socket.on('setMaster', () => {
+		master = socket.id;
+		socket.emit('setMaster');
+		console.log('master connected');
 	});
 });
 
