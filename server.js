@@ -101,9 +101,13 @@ io.on('connection', socket => {
 	});
 
 	socket.on('setMaster', () => {
+		socket.broadcast.emit('disconnect:force');
+		// clear countedUsers array
+
 		master = socket.id;
 		socket.emit('setMaster');
 		console.log('master connected');
+
 	});
 });
 

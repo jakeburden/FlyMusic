@@ -192,6 +192,10 @@ socket.on('stopSound', (data) => {
 	cutSampleHit(data);
 });
 
+socket.on('disconnect:force', () => {
+	window.location.reload();
+});
+
 // bind tap / click events to hits
 window.addEventListener('touchstart', hit);
 window.addEventListener('touchend', cutHit);
