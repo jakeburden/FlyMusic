@@ -109,7 +109,7 @@ function submitUsername(e) {
 	}
 
 	// prepend username with @
-	userData.username = '@' + usernameField.value;
+	userData.username = '@' + encodeURIComponent(usernameField.value);
 
 	// remove form and unblur active field to hide keyboards
 	userForm.classList.remove('user-form--active');
@@ -161,7 +161,7 @@ socket.on('setMaster', () => {
 });
 
 window.master = function master() {
-	socket.emit('setMaster');
+	socket.emit('forceMaster');
 };
 
 // listen for setClient event, store client data, show username form
@@ -193,6 +193,7 @@ socket.on('stopSound', (data) => {
 });
 
 socket.on('disconnect:force', () => {
+	socket.disconnect();
 	window.location.reload();
 });
 
