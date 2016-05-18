@@ -101,17 +101,15 @@ io.on('connection', socket => {
 	});
 
 	socket.on('setMaster', () => {
+		userCount.forEach(client => client = false);
 		socket.broadcast.emit('disconnect:force');
-		// clear countedUsers array
-
 		master = socket.id;
 		socket.emit('setMaster');
 		console.log('master connected');
-
 	});
 });
 
 // listen on port 3000
-http.listen(3000, () => {
+http.listen(3000, '0.0.0.0', () => {
 	console.log('listening on *:3000');
 });
