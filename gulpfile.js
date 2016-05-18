@@ -1,6 +1,6 @@
 
 var gulp = require('gulp'),
-	sass = require('gulp-ruby-sass'),
+	sass = require('gulp-sass'),
     browserify = require('browserify'),
     babel = require('gulp-babel'),
     source = require('vinyl-source-stream'),
@@ -18,9 +18,9 @@ gulp.task('js', function() {
 });
 
 gulp.task('sass', function() {
-	return sass('app.scss', {
-		style: 'compressed'
-	}).pipe(gulp.dest('public/dist'));
+	return gulp.src('app.scss')
+		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+		.pipe(gulp.dest('public/dist'));
 });
 
 gulp.task('default', ['sass', 'js']);
