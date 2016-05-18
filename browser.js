@@ -37,7 +37,14 @@ var userForm = document.querySelector('[data-user-form]'),
 	userInstructions = document.querySelector('[data-user-instructions]'),
 	userInstrument = userInstructions.querySelector('[data-user-instrument]'),
 	userGrid = document.querySelector('[data-user-grid]'),
-	userGridBlocks = userGrid.querySelectorAll('[data-user-block]');
+	userGridBlocks = userGrid.querySelectorAll('[data-user-block]'),
+	video = document.querySelector('video');
+
+// You forcefully become the master & disconnect everyone else.
+function master() {
+	socket.emit('forceMaster');
+}
+window.master = master;
 
 // apply color hit to screen and emit hit event to socket server
 function hit() {
@@ -79,7 +86,7 @@ function applyColorHit(data, noUser = false, element = false) {
 	// create and append element
 	let hit = document.createElement('div');
 	hit.classList.add('hit');
-	hit.style.background = data.color;
+	// hit.style.background = data.color;
 
 	// add user name if requested
 	if (!noUser) {
@@ -108,8 +115,12 @@ function submitUsername(e) {
 		return false;
 	}
 
+	const username = encodeURIComponent(usernameField.value);
+
 	// prepend username with @
-	userData.username = '@' + encodeURIComponent(usernameField.value);
+	userData.username = username.startsWith('@') ?
+		username :
+	 	'@' + username;
 
 	// remove form and unblur active field to hide keyboards
 	userForm.classList.remove('user-form--active');
@@ -158,11 +169,8 @@ socket.on('setMaster', () => {
 	document.body.classList.add('master-client');
 	userGrid.classList.add('active');
 	userForm.classList.remove('user-form--active');
+	video.classList.add('active');
 });
-
-window.master = function master() {
-	socket.emit('forceMaster');
-};
 
 // listen for setClient event, store client data, show username form
 socket.on('setClient', (data) => {
@@ -192,9 +200,15 @@ socket.on('stopSound', (data) => {
 	cutSampleHit(data);
 });
 
+// forcefully disconnects client and reloads the window
 socket.on('disconnect:force', () => {
 	socket.disconnect();
 	window.location.reload();
+});
+
+// room is full
+socket.on('room:full', () => {
+	document.body.innerHTML = "FlyMusic can only support 8 people at this time. Please try again soon.";
 });
 
 // bind tap / click events to hits

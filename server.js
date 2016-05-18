@@ -17,7 +17,7 @@ var userCount = [
 	false,
 	false,
 	false,
-	false,
+	'PLACEHOLDER IMAGE',
 	false,
 	false,
 	false,
@@ -56,8 +56,11 @@ io.on('connection', socket => {
 					color: randomColor(),
 					sample: sample
 				});
-				
+
 				return false;
+			}
+			if (count && index >= userCount.length - 1) {
+				socket.emit('room:full');
 			}
 
 			return true;
@@ -97,12 +100,12 @@ io.on('connection', socket => {
 	});
 
 	socket.on('forceMaster', () => {
-		userCount =  [
+		userCount = [
 			false,
 			false,
 			false,
 			false,
-			false,
+			'PLACEHOLDER IMAGE',
 			false,
 			false,
 			false,

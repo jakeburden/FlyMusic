@@ -4,108 +4,134 @@ module.exports = (function() {
 
 	'use strict';
 
+	const track1 = 'fly-music-samples/Track1/Samples';
+	const track2 = 'fly-music-samples/Track2/Samples';
+	const track3 = 'fly-music-samples/Track3/Samples';
+
+	const track = 'track' + getRandomInt(1, 4);
+
 	return {
 
 		// list of samples
-		stems: {
-			loop: '/Samples/Loop.mp3',
-			parts: [
-				{
-					name: 'Flute 1',
-					source: '/samples/Flute-1.mp3'
-				},
-				{
-					name: 'Flute 2',
-					source: '/samples/Flute-2.mp3'
-				},
-				{
-					name: 'Flute 3',
-					source: '/samples/Flute-3.mp3'
-				},
-				{
-					name: 'Flute 4',
-					source: '/samples/Flute-4.mp3'
-				},
-				{
-					name: 'Flute 5',
-					source: '/samples/Flute-5.mp3'
-				},
-				{
-					name: 'Flute 6',
-					source: '/samples/Flute-6.mp3'
-				},
-				{
-					name: 'Guitar 1',
-					source: '/samples/Guitar-1.mp3'
-				},
-				{
-					name: 'Guitar 2',
-					source: '/samples/Guitar-2.mp3'
-				},
-				{
-					name: 'Guitar 3',
-					source: '/samples/Guitar-3.mp3'
-				},
-				{
-					name: 'Horns 1',
-					source: '/samples/Horns-1.mp3'
-				},
-				{
-					name: 'Percussion 1',
-					source: '/samples/Percussion-1.mp3'
-				},
-				{
-					name: 'Percussion 2',
-					source: '/samples/Percussion-2.mp3'
-				},
-				{
-					name: 'Percussion 3',
-					source: '/samples/Percussion-3.mp3'
-				},
-				{
-					name: 'Percussion 4',
-					source: '/samples/Percussion-4.mp3'
-				},
-				{
-					name: 'Percussion 5',
-					source: '/samples/Percussion-5.mp3'
-				},
-				{
-					name: 'Percussion 6',
-					source: '/samples/Percussion-6.mp3'
-				},
-				{
-					name: 'Piano 1',
-					source: '/samples/Piano-1.mp3'
-				},
-				{
-					name: 'Piano 2',
-					source: '/samples/Piano-2.mp3'
-				},
-				{
-					name: 'Piano 3',
-					source: '/samples/Piano-3.mp3'
-				},
-				{
-					name: 'Piano 4',
-					source: '/samples/Piano-4.mp3'
-				},
-				{
-					name: 'Piano 5',
-					source: '/samples/Piano-5.mp3'
-				},
-				{
-					name: 'Strings 1',
-					source: '/samples/Strings-1.mp3'
-				}
-			],
+		tracks: {
+			track1: {
+				loop: track1 + '/loop.mp3',
+				parts: [
+					{
+						name: 'glitch',
+						source: track1 + '/glitch.mp3'
+					},
+					{
+						name: 'keys 1',
+						source: track1 + '/keys1.mp3'
+					},
+					{
+						name: 'keys 2',
+						source: track1 + '/keys2.mp3'
+					},
+					{
+						name: 'synth 1',
+						source: track1 + '/synth1.mp3'
+					},
+					{
+						name: 'synth 2',
+						source: track1 + '/synth2.mp3'
+					},
+					{
+						name: 'synth 3',
+						source: track1 + '/synth3.mp3'
+					},
+					{
+						name: 'vocals 1',
+						source: track1 + '/vocals1.mp3'
+					},
+					{
+						name: 'vocals 2',
+						source: track1 + '/vocals2.mp3'
+					}
+				],
+			},
+			track2: {
+				loop: track2 + '/loop.mp3',
+				parts: [
+					{
+						name: 'flute 1',
+						source: track2 + '/flute1.mp3'
+					},
+					{
+						name: 'flute 2',
+						source: track2 + '/flute2.mp3'
+					},
+					{
+						name: 'keys 1',
+						source: track2 + '/keys1.mp3'
+					},
+					{
+						name: 'keys 2',
+						source: track2 + '/keys2.mp3'
+					},
+					{
+						name: 'synth 1',
+						source: track2 + '/synth1.mp3'
+					},
+					{
+						name: 'synth 2',
+						source: track2 + '/synth2.mp3'
+					},
+					{
+						name: 'trumpt',
+						source: track2 + '/trump2.mp3'
+					},
+					{
+						name: 'vocals',
+						source: track2 + '/vocals.mp3'
+					}
+				]
+			},
+			track3: {
+				loop: track3 + '/loop.mp3',
+				parts: [
+					{
+						name: 'bass 1',
+						source: track3 + '/bass1.mp3'
+					},
+					{
+						name: 'bass 2',
+						source: track3 + '/bass2.mp3'
+					},
+					{
+						name: 'glitch',
+						source: track1 + '/glitch.mp3'
+					},
+					{
+						name: 'keys 1',
+						source: track3 + '/keys1.mp3'
+					},
+					{
+						name: 'keys 2',
+						source: track3 + '/keys2.mp3'
+					},
+					{
+						name: 'keys 3',
+						source: track3 + '/keys3.mp3'
+					},
+					{
+						name: 'vocals 1',
+						source: track3 + '/vocals1.mp3'
+					},
+					{
+						name: 'vocals 2',
+						source: track3 + '/vocals2.mp3'
+					}
+				]
+			}
 		},
 
 		partsWithLoop: function() {
-			var parts = this.stems.parts;
+			var parts = this.tracks[track].parts;
 			parts.push({
 				name: 'Loop',
-				source: this.stems.loop
+				source: this.tracks[track].loop
 			});
 
 			return parts;
@@ -113,53 +139,30 @@ module.exports = (function() {
 
 		currentList: [],
 
-		reserve: [
-			'Piano 1',
-			'Piano 2'
-		],
-
 		// return random sample from list
 		getRandom: function() {
 
-			var randomSample = null;
-
 			// if list is empty, refill and empty current
-			if (!this.stems.parts.length) {
-				this.stems.parts = this.currentList.slice();
+			if (!this.tracks[track].parts.length) {
+				this.tracks[track].parts = this.currentList.slice();
 				this.currentList = [];
 			}
 
-			console.log(this.reserve);
 
-			// if reserves left
-			if (this.reserve.length) {
-				console.log('here');
-				let reserve = this.reserve.shift(),
-					part = this.stems.parts.filter(function(obj) {
-						if (obj.name === reserve) {
-							return true;
-						} else {
-							return false;
-						}
-					});
-
-				if (!part.length) {
-					return false;
-				}
-
-				randomSample = part[0];
-			} else {
-				// find random sample
-				randomSample = this.stems.parts[Math.floor(Math.random() * this.stems.parts.length)];
-			}
+			// find random sample
+			const randomSample = this.tracks[track].parts[Math.floor(Math.random() * this.tracks[track].parts.length)];
 
 			// add to current list
 			this.currentList.push(randomSample);
 
 			// remove from main list
-			this.stems.parts.splice(this.stems.parts.indexOf(randomSample), 1);
+			this.tracks[track].parts.splice(this.tracks[track].parts.indexOf(randomSample), 1);
 
 			return randomSample;
 		}
 	};
 })();
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
