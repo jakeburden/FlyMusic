@@ -49,7 +49,7 @@ io.on('connection', socket => {
 
 	// otherwise set as client with color and sample
 	} else {
-		let sample = samples.getRandom();
+		let sample = samples.getNext();
 		let id = 0;
 		console.log(sample);
 
