@@ -5,10 +5,14 @@ var gulp = require('gulp'),
     babel = require('gulp-babel'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
-    uglify = require('gulp-uglify');
+    uglify = require('gulp-uglify'),
+	envify = require('envify/custom');
 
 gulp.task('js', function() {
 	return browserify('browser.js')
+		.transform(envify({
+			TRACK: process.env.TRACK
+		}))
 		.bundle()
 		.pipe(source('app.js'))
 		.pipe(buffer())
