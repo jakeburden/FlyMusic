@@ -69,10 +69,11 @@ io.on('connection', socket => {
 					sample: sample
 				});
 
-				console.log('index', index);
-				if (!count && index === 0) {
-					socket.emit('initialConnection');
-				}
+				// console.log('index', index);
+				// if (!count && index === 0) {
+				// 	console.log('should be initial connection')
+				// 	socket.emit('initialConnection');
+				// }
 
 				return false;
 			}
@@ -83,6 +84,10 @@ io.on('connection', socket => {
 			return true;
 		});
 	}
+
+	socket.on('user:submit', (data) => {
+		socket.broadcast.to(master).emit('playSound', data);
+	});
 
 	// listen for hit events from client
 	socket.on('hit', (data) => {

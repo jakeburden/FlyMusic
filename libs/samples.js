@@ -80,7 +80,7 @@ module.exports = (function(sample, random) {
 					},
 					{
 						name: 'trumpt',
-						source: track2 + '/trump2.mp3'
+						source: track2 + '/trumpt.mp3'
 					},
 					{
 						name: 'vocals',

@@ -130,6 +130,7 @@ function submitUsername(e) {
 	userInstrument.innerHTML = `${userData.username} you are playing ${userData.sample.name}`;
 
 	userInstructions.classList.add('user-instructions--active');
+	socket.emit('user:submit', userData);
 }
 
 function loadSamples(sample) {
@@ -217,9 +218,20 @@ socket.on('room:full', () => {
 	document.body.innerHTML = "FlyMusic can only support 8 people at this time. Please try again soon.";
 });
 
-socket.on('initialConnection', () => {
-	console.log('first client connected');
-});
+// socket.on('initialConnection', () => {
+// 	console.log('first client connected');
+// 	loop = context.createBufferSource();
+// 	loop.buffer = decodedSamples.Loop;
+// 	loop.connect(loopGain);
+// 	loopGain.connect(context.destination);
+// 	loop.loop = true;
+// 	loop.loopEnd = loop.buffer.duration - 0.02;
+// 	loop.start(0);
+// 	setTimeout(() => {
+// 		loop.stop();
+// 		loop = null;
+// 	});
+// });
 
 socket.on('connections:yes', () => {
 	console.log('connections:yes');
