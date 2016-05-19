@@ -158,7 +158,7 @@ function loadingComplete(decodedData) {
 			loop.connect(loopGain);
 			loopGain.connect(context.destination);
 			loop.loop = true;
-			loop.loopEnd = loop.buffer.duration - 0.02;
+			loop.loopEnd = loop.buffer.duration - 0.08;
 			loop.start(0);
 		}
 	});
