@@ -33,6 +33,7 @@ var decodedSamples = [],
 
 // DOM nodes
 var userForm = document.querySelector('[data-user-form]'),
+	userSubmit = document.querySelector('.user-form__submit'),
 	usernameField = userForm.querySelector('[data-username-field]'),
 	userInstructions = document.querySelector('[data-user-instructions]'),
 	userInstrument = userInstructions.querySelector('[data-user-instrument]'),
