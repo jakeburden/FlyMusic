@@ -17,12 +17,14 @@ var userCount = [
 	false,
 	false,
 	false,
-	false,
+	'PLACEHOLDER IMAGE',
 	false,
 	false,
 	false,
 	false
 ];
+
+var connections = 0;
 
 // store master client id when connected
 var master = false;
@@ -33,6 +35,11 @@ app.use(express.static('public'));
 // socket connection initialized
 io.on('connection', socket => {
 	console.log('a user connected');
+	console.log('connections', connections);
+
+	if (!connections) {
+		socket.broadcast.to(master).emit('connections:no');
+	}
 
 	// no master client specified so set now
 	if (!master) {
@@ -46,6 +53,11 @@ io.on('connection', socket => {
 		let id = 0;
 		console.log(sample);
 
+		connections++;
+		if (connections === 1) {
+			socket.broadcast.to(master).emit('connections:yes');
+		}
+
 		userCount.every(function(count, index) {
 			if (!count) {
 				id = index;
@@ -56,13 +68,26 @@ io.on('connection', socket => {
 					color: randomColor(),
 					sample: sample
 				});
-				
+
+				// console.log('index', index);
+				// if (!count && index === 0) {
+				// 	console.log('should be initial connection')
+				// 	socket.emit('initialConnection');
+				// }
+
 				return false;
+			}
+			if (count && index >= userCount.length - 1) {
+				socket.emit('room:full');
 			}
 
 			return true;
 		});
 	}
+
+	socket.on('user:submit', (data) => {
+		socket.broadcast.to(master).emit('playSound', data);
+	});
 
 	// listen for hit events from client
 	socket.on('hit', (data) => {
@@ -84,9 +109,17 @@ io.on('connection', socket => {
 	// socket disconnected
 	socket.on('disconnect', () => {
 		console.log('user disconnected');
+		connections--;
+		console.log('connections', connections);
+		if (!connections) {
+			socket.broadcast.to(master).emit('connections:no');
+		}
+
 
 		const index = userCount.indexOf(socket.id);
 		userCount[index] = false;
+		console.log('index wow:', index);
+		socket.broadcast.to(master).emit('unsetClient', index);
 
 		// if client was master then reset master
 		if (socket.id === master) {
@@ -97,12 +130,12 @@ io.on('connection', socket => {
 	});
 
 	socket.on('forceMaster', () => {
-		userCount =  [
+		userCount = [
 			false,
 			false,
 			false,
 			false,
-			false,
+			'PLACEHOLDER IMAGE',
 			false,
 			false,
 			false,
