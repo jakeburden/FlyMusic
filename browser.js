@@ -41,8 +41,8 @@ var userForm = document.querySelector('[data-user-form]'),
 	video = document.querySelector('video');
 
 // You forcefully become the master & disconnect everyone else.
-function master() {
-	socket.emit('forceMaster');
+function master(sample) {
+	socket.emit('forceMaster', sample);
 }
 window.master = master;
 
@@ -132,13 +132,13 @@ function submitUsername(e) {
 	userInstructions.classList.add('user-instructions--active');
 }
 
-function loadSamples() {
+function loadSamples(sample) {
 	let bufferLoader = new BufferLoader(context, samples.partsWithLoop(), loadingComplete);
 	bufferLoader.load();
 }
 
 function loadingComplete(decodedData) {
-	alert('samples loaded!');
+	console.log('samples loaded!');
 	console.log(decodedData.Loop);
 	decodedSamples = decodedData;
 
@@ -163,9 +163,9 @@ function loadingComplete(decodedData) {
 }
 
 // this client is the master client so set body class and load samples
-socket.on('setMaster', () => {
+socket.on('setMaster', (sample) => {
 	console.log('setMaster');
-	loadSamples();
+	loadSamples(sample);
 	document.body.classList.add('master-client');
 	userGrid.classList.add('active');
 	userForm.classList.remove('user-form--active');
@@ -182,6 +182,12 @@ socket.on('setClient', (data) => {
 
 	// this is a client so show username form
 	userForm.classList.add('user-form--active');
+});
+
+socket.on('unsetClient', id => {
+	[].forEach.call(userGridBlocks[id].querySelectorAll('.hit__username'), user => {
+		user.style.display = 'none';
+	});
 });
 
 // ** master client only **
@@ -209,6 +215,18 @@ socket.on('disconnect:force', () => {
 // room is full
 socket.on('room:full', () => {
 	document.body.innerHTML = "FlyMusic can only support 8 people at this time. Please try again soon.";
+});
+
+socket.on('initialConnection', () => {
+	console.log('first client connected');
+});
+
+socket.on('connections:yes', () => {
+	console.log('connections:yes');
+});
+
+socket.on('connections:no', () => {
+	console.log('connections:no');
 });
 
 // bind tap / click events to hits

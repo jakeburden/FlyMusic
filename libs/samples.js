@@ -1,15 +1,15 @@
 
 // samples list and random sample generator
-module.exports = (function() {
+module.exports = (function(sample, random) {
 
 	'use strict';
 
-	const track1 = 'fly-music-samples/Track1/Samples';
-	const track2 = 'fly-music-samples/Track2/Samples';
-	const track3 = 'fly-music-samples/Track3/Samples';
+	const track1 = 'fly-music-samples/Track 1/Samples';
+	const track2 = 'fly-music-samples/Track 2/Samples';
+	const track3 = 'fly-music-samples/Track 3/Samples';
 
-	const track = 'track' + getRandomInt(1, 4);
-
+	const track = process.env.TRACK || 'track1';
+	console.log('track', track);
 	return {
 
 		// list of samples
@@ -157,6 +157,7 @@ module.exports = (function() {
 
 			// remove from main list
 			this.tracks[track].parts.splice(this.tracks[track].parts.indexOf(randomSample), 1);
+			console.log(randomSample);
 
 			return randomSample;
 		}

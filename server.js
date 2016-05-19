@@ -24,6 +24,8 @@ var userCount = [
 	false
 ];
 
+var connections = 0;
+
 // store master client id when connected
 var master = false;
 
@@ -33,6 +35,11 @@ app.use(express.static('public'));
 // socket connection initialized
 io.on('connection', socket => {
 	console.log('a user connected');
+	console.log('connections', connections);
+
+	if (!connections) {
+		socket.broadcast.to(master).emit('connections:no');
+	}
 
 	// no master client specified so set now
 	if (!master) {
@@ -46,6 +53,11 @@ io.on('connection', socket => {
 		let id = 0;
 		console.log(sample);
 
+		connections++;
+		if (connections === 1) {
+			socket.broadcast.to(master).emit('connections:yes');
+		}
+
 		userCount.every(function(count, index) {
 			if (!count) {
 				id = index;
@@ -56,6 +68,11 @@ io.on('connection', socket => {
 					color: randomColor(),
 					sample: sample
 				});
+
+				console.log('index', index);
+				if (!count && index === 0) {
+					socket.emit('initialConnection');
+				}
 
 				return false;
 			}
@@ -87,9 +104,17 @@ io.on('connection', socket => {
 	// socket disconnected
 	socket.on('disconnect', () => {
 		console.log('user disconnected');
+		connections--;
+		console.log('connections', connections);
+		if (!connections) {
+			socket.broadcast.to(master).emit('connections:no');
+		}
+
 
 		const index = userCount.indexOf(socket.id);
 		userCount[index] = false;
+		console.log('index wow:', index);
+		socket.broadcast.to(master).emit('unsetClient', index);
 
 		// if client was master then reset master
 		if (socket.id === master) {
