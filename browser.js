@@ -10,8 +10,8 @@ const context = new AudioContext();
 const loopGain = context.createGain();
 const partsGain = context.createGain();
 
-loopGain.gain.value = 0.9;
-partsGain.gain.value = 0.1;
+loopGain.gain.value = 0.8;
+partsGain.gain.value = 0.8;
 
 // initialize socket connection
 const socket = io();
