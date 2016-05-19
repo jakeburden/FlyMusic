@@ -10,6 +10,7 @@
     "gulp-babel": "^5.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.4.1",
+    "mdl-ripple": "0.0.5",
     "randomcolor": "^0.4.4",
     "socket.io": "^1.4.5",
     "vinyl-buffer": "^1.0.0",
@@ -20,7 +21,7 @@
   },
   "scripts": {
     "start": "node server.js",
-	"dev": "gulp && npm start"
+    "dev": "gulp && npm start"
   },
   "main": "server.js",
   "repository": {

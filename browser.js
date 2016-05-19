@@ -210,7 +210,6 @@ socket.on('stopSound', (data) => {
 // forcefully disconnects client and reloads the window
 socket.on('disconnect:force', () => {
 	socket.disconnect();
-	window.location.reload();
 });
 
 // room is full

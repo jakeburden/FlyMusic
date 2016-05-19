@@ -20,7 +20,7 @@ img {
 }
 
 img {
-	object-fit: contain;
+	object-fit: cover;
 }
 
 video {
@@ -85,7 +85,6 @@ video {
 	height: 100%;
 	left: 0;
 	overflow: hidden;
-	padding: 20px;
 	position: absolute;
 	text-align: center;
 	top: 0;
