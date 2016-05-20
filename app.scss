@@ -193,3 +193,16 @@ video {
 .floating {
     box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);
 }
+
+.center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin:  0 auto;
+	height: 100%;
+	padding: 2em;
+}
+
+.master-client .center {
+	color: #fff;
+}

@@ -236,9 +236,13 @@ socket.on('disconnect:force', () => {
 	socket.disconnect();
 });
 
+socket.on('disconnect', () => {
+	document.body.innerHTML = '<p class="center">Connection to FlyMusic has been lost. Refresh to try again.</p>';
+});
+
 // room is full
 socket.on('room:full', () => {
-	document.body.innerHTML = "FlyMusic can only support 8 people at this time. Please try again soon.";
+	document.body.innerHTML = '<p class="center">FlyMusic can only support 8 people at this time. Please try again soon.</p>';
 });
 
 // put new user on grid
