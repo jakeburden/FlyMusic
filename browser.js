@@ -1,3 +1,5 @@
+var escape = require('escape-html');
+
 // get buffer loader module
 const BufferLoader = require('./libs/buffer-loader');
 
@@ -29,7 +31,9 @@ const userData = {
 
 var decodedSamples = [],
 	loop = null,
-	parts = {};
+	parts = {},
+	isMaster = false,
+	isClient = false;
 
 // DOM nodes
 var userForm = document.querySelector('[data-user-form]'),
@@ -39,7 +43,8 @@ var userForm = document.querySelector('[data-user-form]'),
 	userInstrument = userInstructions.querySelector('[data-user-instrument]'),
 	userGrid = document.querySelector('[data-user-grid]'),
 	userGridBlocks = userGrid.querySelectorAll('[data-user-block]'),
-	video = document.querySelector('video');
+	video = document.querySelector('video'),
+	grow = document.querySelector('.grow');
 
 // You forcefully become the master & disconnect everyone else.
 function master(sample) {
@@ -86,17 +91,29 @@ function cutSampleHit(data) {
 function applyColorHit(data, noUser = false, element = false) {
 	// create and append element
 	let hit = document.createElement('div');
-	hit.classList.add('hit');
-	// hit.style.background = data.color;
-
-	// add user name if requested
-	if (!noUser) {
-		hit.innerHTML = '<h2 class="hit__username">' + data.username + '</h2>';
-	}
-
 	let el = element ? element : document.body;
 
-	el.appendChild(hit);
+	hit.classList.add('hit');
+
+	if (isMaster) {
+		hit.style.background = data.color;
+		// add user name if requested
+		if (!noUser) {
+			hit.innerHTML = `
+				<h2 class="hit__username">${data.username}</h2>
+				<section class="hue-rotate">
+					<img src="http://www.petersena.com/drop/redTest.gif" style="filter: hue-rotate(360deg) saturate(5.3);">
+				</section>
+				`;
+
+			setTimeout(() => {
+				hit.innerHTML = `<h2 class="hit__username">${data.username}</h2>`;
+			}, 1200);
+
+			el.innerHTML = '';
+			el.appendChild(hit);
+		}
+	}
 
 	// add / remove active modifier class
 	setTimeout(() => {
@@ -116,7 +133,7 @@ function submitUsername(e) {
 		return false;
 	}
 
-	const username = encodeURIComponent(usernameField.value);
+	const username = escape(usernameField.value);
 
 	// prepend username with @
 	userData.username = username.startsWith('@') ?
@@ -172,6 +189,8 @@ socket.on('setMaster', (sample) => {
 	userGrid.classList.add('active');
 	userForm.classList.remove('user-form--active');
 	video.classList.add('active');
+	isMaster = true;
+	isClient = false;
 });
 
 // listen for setClient event, store client data, show username form
@@ -184,6 +203,10 @@ socket.on('setClient', (data) => {
 
 	// this is a client so show username form
 	userForm.classList.add('user-form--active');
+	isClient = true;
+	isMaster = false;
+
+	document.querySelector('.btn.floating').style.backgroundColor = data.color;
 });
 
 socket.on('unsetClient', id => {
@@ -249,3 +272,36 @@ window.addEventListener('mouseup', cutHit);
 
 // bind username submission event
 userForm.addEventListener('submit', submitUsername);
+
+const growHeight = 100;
+const growWidth = 100;
+
+grow.addEventListener('touchstart', () => {
+	let h = growHeight;
+	let w = growWidth;
+	var interval = setInterval(() => {
+		grow.style.height = ++h + 'px';
+		grow.style.width = ++w + 'px';
+	}, 	5);
+
+	grow.addEventListener('touchend', () => {
+		clearInterval(interval);
+		grow.style.height = growHeight + 'px';
+		grow.style.width = growWidth + 'px';
+	});
+});
+
+grow.addEventListener('mousedown', () => {
+	let h = growHeight;
+	let w = growWidth;
+	var interval = setInterval(() => {
+		grow.style.height = ++h + 'px';
+		grow.style.width = ++w + 'px';
+	}, 	5);
+
+	grow.addEventListener('mouseup', () => {
+		clearInterval(interval);
+		grow.style.height = growHeight + 'px';
+		grow.style.width = growWidth + 'px';
+	});
+});

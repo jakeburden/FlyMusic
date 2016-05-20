@@ -151,3 +151,45 @@ video {
 		border-bottom: 0;
 	}
 }
+
+.hue-rotate {
+    opacity: 0.2;
+    height: 100%;
+    width: 100%;
+}
+
+.hue-rotate img {
+	filter: hue-rotate(180deg);
+	-webkit-filter: hue-rotate(180deg);
+	-moz-filter: hue-rotate(180deg);
+	-o-filter: hue-rotate(180deg);
+	-ms-filter: hue-rotate(180deg);
+}
+
+.hue-rotate img:hover {
+	filter: hue-rotate(0);
+	-webkit-filter: hue-rotate(0);
+	-moz-filter: hue-rotate(0);
+	-o-filter: hue-rotate(0);
+	-ms-filter: hue-rotate(0);
+}
+
+.btn.floating {
+	background-image: url(/print.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 65px;
+}
+
+.btn {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.floating {
+    box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);
+}

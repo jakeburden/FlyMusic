@@ -65,7 +65,9 @@ io.on('connection', socket => {
 
 				socket.emit('setClient', {
 					id: id,
-					color: randomColor(),
+					color: randomColor({
+					   format: 'rgba'
+					}),
 					sample: sample
 				});
 
