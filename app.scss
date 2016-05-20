@@ -4,10 +4,30 @@ body {
 	height: 100%;
 	margin: 0;
 	position: relative;
+	-webkit-user-select: none;
+   -moz-user-select: none;
+	-ms-user-select: none;
+		user-select: none;
+	transition: background 3s;
+}
+
+body {
+	padding: 1em;
+}
+
+body.master-client {
+	padding: 0;
+	margin: 0;
 }
 
 * {
 	box-sizing: border-box;
+}
+
+h1 {
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 1px;
 }
 
 figure,
@@ -55,6 +75,7 @@ video {
 	text-align: center;
 	top: 50%;
 	transform: translate(-50%, -50%);
+	width: 100%;
 }
 
 .user-instructions--active {
@@ -116,7 +137,7 @@ video {
 	top: 50%;
 	transform: translateY(-50%);
 	width: 100%;
-	font-family: Avenir;
+	font-family: Helvetica;
 	letter-spacing: 10px;
 	font-weight: 100;
 	text-rendering: optimizeLegibility;
@@ -187,11 +208,18 @@ video {
     margin: 0 auto;
     padding: 20px;
     border-radius: 50%;
-    position: relative;
+	position: absolute;
+    left: 0;
+    right: 0;
 }
 
 .floating {
     box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);
+}
+
+.grow {
+	transition: all 5s;
+	will-change: height, width;
 }
 
 .center {
@@ -205,4 +233,10 @@ video {
 
 .master-client .center {
 	color: #fff;
+}
+
+.pulse {
+	margin-top: 8em;
+	z-index: -1;
+	object-fit: contain;
 }

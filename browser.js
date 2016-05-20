@@ -145,7 +145,13 @@ function submitUsername(e) {
 	document.activeElement.blur();
 
 	// update user instructions with username and sample and show
-	userInstrument.innerHTML = `${userData.username} you are playing ${userData.sample.name}`;
+	userInstrument.innerHTML = `
+		<h1>
+			Welcome ${userData.username}
+		</h1>
+		<p>
+			you are playing ${userData.sample.name}
+		</p>`;
 
 	userInstructions.classList.add('user-instructions--active');
 	socket.emit('user:submit', userData);
@@ -286,32 +292,32 @@ userForm.addEventListener('submit', submitUsername);
 const growHeight = 100;
 const growWidth = 100;
 
-grow.addEventListener('touchstart', () => {
-	let h = growHeight;
-	let w = growWidth;
-	var interval = setInterval(() => {
-		grow.style.height = ++h + 'px';
-		grow.style.width = ++w + 'px';
-	}, 	5);
-
-	grow.addEventListener('touchend', () => {
-		clearInterval(interval);
-		grow.style.height = growHeight + 'px';
-		grow.style.width = growWidth + 'px';
-	});
-});
+// grow.addEventListener('touchstart', () => {
+// 	let h = growHeight;
+// 	let w = growWidth;
+// 	//var interval = setInterval(() => {
+// 		grow.style.height = 2000 + 'px';//++h + 'px';
+// 		grow.style.width = 2000 + 'px';//++w + 'px';
+// 	//}, 	5);
+//
+// 	grow.addEventListener('touchend', () => {
+// 	//	clearInterval(interval);
+// 		grow.style.height = growHeight + 'px';
+// 		grow.style.width = growWidth + 'px';
+// 	});
+// });
 
 grow.addEventListener('mousedown', () => {
-	let h = growHeight;
-	let w = growWidth;
-	var interval = setInterval(() => {
-		grow.style.height = ++h + 'px';
-		grow.style.width = ++w + 'px';
-	}, 	5);
+	const gif = document.createElement('img');
+	gif.src = "pulse.gif";
+	// gif.style.filter = "hue-rotate(360deg) saturate(5.3);";
+	gif.classList.add('pulse');
+	document.body.appendChild(gif);
+
+	document.body.style.background = userData.color;
 
 	grow.addEventListener('mouseup', () => {
-		clearInterval(interval);
-		grow.style.height = growHeight + 'px';
-		grow.style.width = growWidth + 'px';
+		document.body.removeChild(gif);
+		document.body.style.background = '#fff';
 	});
 });
