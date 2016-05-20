@@ -241,6 +241,12 @@ socket.on('room:full', () => {
 	document.body.innerHTML = "FlyMusic can only support 8 people at this time. Please try again soon.";
 });
 
+// put new user on grid
+socket.on('onboard', data => {
+	console.log('onboard', data);
+	applyColorHit(data, false, userGridBlocks[data.id]);
+});
+
 // socket.on('initialConnection', () => {
 // 	console.log('first client connected');
 // 	loop = context.createBufferSource();

@@ -88,7 +88,7 @@ io.on('connection', socket => {
 	}
 
 	socket.on('user:submit', (data) => {
-		socket.broadcast.to(master).emit('playSound', data);
+		socket.broadcast.to(master).emit('onboard', data);
 	});
 
 	// listen for hit events from client
