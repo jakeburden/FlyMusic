@@ -1,4 +1,5 @@
 var escape = require('escape-html');
+var parseColor = require('parse-color');
 
 // get buffer loader module
 const BufferLoader = require('./libs/buffer-loader');
@@ -294,17 +295,31 @@ const growWidth = 100;
 // 	});
 // });
 
-grow.addEventListener('touchstart', () => {
-	// const gif = document.createElement('img');
-	// gif.src = "pulse.gif";
-	// // gif.style.filter = "hue-rotate(360deg) saturate(5.3);";
-	// gif.classList.add('pulse');
-	// document.body.appendChild(gif);
+grow.addEventListener('touchdown', (e) => {
+	e.preventDefault();
+	const gif = document.createElement('img');
+	gif.src = "pulse.gif";
+	// gif.style.filter = "hue-rotate(360deg) saturate(5.3);";
+	gif.classList.add('pulse');
+	document.body.appendChild(gif);
 
 	document.body.style.background = userData.color;
+	const base = [355, 97, 55];
+	const color = parseColor(userData.color);
+	const target = color.hsl; // array of [h, s, l]
 
-	grow.addEventListener('touchend', () => {
-		// document.body.removeChild(gif);
+	const hue = target[0] - base[0];
+	const saturation = 100 + base[1] - target[1];
+	const light = 100 + target[2] - base[2];
+
+	const filter = 'brightness(50%) sepia(1) hue-rotate(' + hue + 'deg) saturate(' + saturation + '%) brightness(' + light + '%)';
+	console.log(filter);
+
+	gif.style.webkitFilter = filter;
+	gif.style.filter = filter;
+
+	grow.addEventListener('touchup', () => {
+		document.body.removeChild(gif);
 		document.body.style.background = '#fff';
 	});
 });

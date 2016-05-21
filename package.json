@@ -11,6 +11,7 @@
     "gulp-babel": "^5.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.4.1",
+    "parse-color": "^1.0.0",
     "randomcolor": "^0.4.4",
     "socket.io": "^1.4.5",
     "vinyl-buffer": "^1.0.0",
