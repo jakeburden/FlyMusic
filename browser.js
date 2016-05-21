@@ -295,7 +295,7 @@ const growWidth = 100;
 // 	});
 // });
 
-grow.addEventListener('touchdown', (e) => {
+grow.addEventListener('mouseup', (e) => {
 	e.preventDefault();
 	const gif = document.createElement('img');
 	gif.src = "pulse.gif";
@@ -318,7 +318,7 @@ grow.addEventListener('touchdown', (e) => {
 	gif.style.webkitFilter = filter;
 	gif.style.filter = filter;
 
-	grow.addEventListener('touchup', () => {
+	grow.addEventListener('mousedown', () => {
 		document.body.removeChild(gif);
 		document.body.style.background = '#fff';
 	});
