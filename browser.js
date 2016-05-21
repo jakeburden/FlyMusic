@@ -116,7 +116,7 @@ function applyColorHit(data, noUser = false, element = false) {
 				hit.innerHTML = `<h2 class="hit__username">${data.username}</h2>`;
 			}, 1200);
 
-			// el.innerHTML = '';
+			el.innerHTML = '';
 			el.appendChild(hit);
 		}
 	}
