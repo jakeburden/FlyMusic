@@ -295,7 +295,7 @@ const growWidth = 100;
 // 	});
 // });
 
-grow.addEventListener('mouseup', (e) => {
+grow.addEventListener('touchstart', (e) => {
 	e.preventDefault();
 	const gif = document.createElement('img');
 	gif.src = "pulse.gif";
@@ -318,8 +318,9 @@ grow.addEventListener('mouseup', (e) => {
 	gif.style.webkitFilter = filter;
 	gif.style.filter = filter;
 
-	grow.addEventListener('mousedown', () => {
-		document.body.removeChild(gif);
-		document.body.style.background = '#fff';
-	});
+});
+
+grow.addEventListener('touchend', () => {
+	document.body.removeNode(document.querySelector('.pulse'));
+	document.body.style.background = '#fff';
 });
