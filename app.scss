@@ -127,6 +127,15 @@ video {
 
 .hit--active {
 	opacity: .7;
+	position: relative;
+}
+
+.hit--active img {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }
 
 .hit__username {
