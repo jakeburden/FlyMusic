@@ -96,22 +96,27 @@ function applyColorHit(data, noUser = false, element = false) {
 
 	hit.classList.add('hit');
 
+	const base = [355, 97, 55];
+	const color = parseColor(data.color);
+	const target = color.hsl; // array of [h, s, l]
+
+	const hue = target[0] - base[0];
+	const saturation = 100 + base[1] - target[1];
+	const light = 100 + target[2] - base[2];
+
+	const filter = 'brightness(50%) sepia(1) hue-rotate(' + hue + 'deg) saturate(' + saturation + '%) brightness(' + light + '%)';
+
 	if (isMaster) {
 		hit.style.background = data.color;
 		// add user name if requested
 		if (!noUser) {
-			hit.innerHTML = `
-				<h2 class="hit__username">${data.username}</h2>
-				<section class="hue-rotate">
-					<img src="http://www.petersena.com/drop/redTest.gif" style="filter: hue-rotate(360deg) saturate(5.3);">
-				</section>
-				`;
+			hit.innerHTML = '<h2 class="hit__username">'+data.username+'</h2><section><img src="pulse.gif" style="-webkit-filter:' + filter + ';opacity:0.3;"></section>';
 
 			setTimeout(() => {
 				hit.innerHTML = `<h2 class="hit__username">${data.username}</h2>`;
 			}, 1200);
 
-			el.innerHTML = '';
+			// el.innerHTML = '';
 			el.appendChild(hit);
 		}
 	}
