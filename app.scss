@@ -76,6 +76,7 @@ video {
 	top: 50%;
 	transform: translate(-50%, -50%);
 	width: 100%;
+	padding: 1em;
 }
 
 .user-instructions--active {
@@ -239,4 +240,12 @@ video {
 	margin-top: 8em;
 	z-index: -1;
 	object-fit: contain;
+}
+
+.hashtag {
+    position: absolute;
+    color: purple;
+    bottom: 10px;
+    left: 10px;
+    font-weight: bold;
 }

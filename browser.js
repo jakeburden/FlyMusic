@@ -216,9 +216,11 @@ socket.on('setClient', (data) => {
 });
 
 socket.on('unsetClient', id => {
-	[].forEach.call(userGridBlocks[id].querySelectorAll('.hit__username'), user => {
-		user.style.display = 'none';
-	});
+	// [].forEach.call(userGridBlocks[id].querySelectorAll('.hit__username'), user => {
+	// 	user.style.display = 'none';
+	// });
+
+	if (userGridBlocks[id]) userGridBlocks[id].innerHTML = '';
 });
 
 // ** master client only **
@@ -257,21 +259,6 @@ socket.on('onboard', data => {
 	applyColorHit(data, false, userGridBlocks[data.id]);
 });
 
-// socket.on('initialConnection', () => {
-// 	console.log('first client connected');
-// 	loop = context.createBufferSource();
-// 	loop.buffer = decodedSamples.Loop;
-// 	loop.connect(loopGain);
-// 	loopGain.connect(context.destination);
-// 	loop.loop = true;
-// 	loop.loopEnd = loop.buffer.duration - 0.02;
-// 	loop.start(0);
-// 	setTimeout(() => {
-// 		loop.stop();
-// 		loop = null;
-// 	});
-// });
-
 socket.on('connections:yes', () => {
 	console.log('connections:yes');
 });
@@ -307,17 +294,17 @@ const growWidth = 100;
 // 	});
 // });
 
-grow.addEventListener('mousedown', () => {
-	const gif = document.createElement('img');
-	gif.src = "pulse.gif";
-	// gif.style.filter = "hue-rotate(360deg) saturate(5.3);";
-	gif.classList.add('pulse');
-	document.body.appendChild(gif);
+grow.addEventListener('touchstart', () => {
+	// const gif = document.createElement('img');
+	// gif.src = "pulse.gif";
+	// // gif.style.filter = "hue-rotate(360deg) saturate(5.3);";
+	// gif.classList.add('pulse');
+	// document.body.appendChild(gif);
 
 	document.body.style.background = userData.color;
 
-	grow.addEventListener('mouseup', () => {
-		document.body.removeChild(gif);
+	grow.addEventListener('touchend', () => {
+		// document.body.removeChild(gif);
 		document.body.style.background = '#fff';
 	});
 });
