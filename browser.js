@@ -296,7 +296,7 @@ const growWidth = 100;
 // });
 
 grow.addEventListener('touchstart', (e) => {
-	e.preventDefault();
+	// e.preventDefault();
 	const gif = document.createElement('img');
 	gif.src = "pulse.gif";
 	// gif.style.filter = "hue-rotate(360deg) saturate(5.3);";
@@ -321,6 +321,6 @@ grow.addEventListener('touchstart', (e) => {
 });
 
 grow.addEventListener('touchend', () => {
-	document.body.removeNode(document.querySelector('.pulse'));
+	document.body.removeChild(document.querySelector('.pulse'));
 	document.body.style.background = '#fff';
 });
