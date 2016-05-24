@@ -1,14 +1,14 @@
 const http = require('http')
+const EventEmitter = require('events').EventEmitter
 const routes = require('patterns')()
 const websocket = require('websocket-stream')
-const createStore = require('store-emitter')
 const st = require('st')
 const serve = st({
   path: 'browser/dist'
 })
 
+const events = new EventEmitter();
 const initState = require('initState.json')
-const store = createStore(modifier, initState)
 
 const server = http.createServer((req, res) => {
   const m = routes.match(req.method + ' ' + req.url)
@@ -32,22 +32,11 @@ server.listen(9090, () => {
 wss.on('connection', ws => {
   console.log('a user has connected')
 
-  ws.on('message', msg => {
-    store()
+  ws.on('message', ({msg: {}}) => {
+    events.emit()
   })
 })
 
-function modifier (action, state) {
-  switch (action.type) {
-    case 'room:create':
-      return Object.assign(state, {
-        rooms: state.rooms.push(action.roomName)
-      })
-
-    default:
-      return state
-  }
-}
 // include dependencies
 const st = require('express');
 const httpFactory = require('http');
