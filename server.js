@@ -1,5 +1,55 @@
+const http = require('http')
+const routes = require('patterns')()
+const websocket = require('websocket-stream')
+const createStore = require('store-emitter')
+const st = require('st')
+const serve = st({
+  path: 'browser/dist'
+})
+
+const initState = require('initState.json')
+const store = createStore(modifier, initState)
+
+const server = http.createServer((req, res) => {
+  const m = routes.match(req.method + ' ' + req.url)
+  if (!m) {
+    serve(req, res)
+    return
+  }
+
+  const fn = m.value
+  req.params = m.params
+
+  fn(req, res)
+})
+
+const wss = websocket.createServer({server: server})
+
+server.listen(9090, () => {
+  console.log('server is listening on http://127.0.0.1:9090')
+})
+
+wss.on('connection', ws => {
+  console.log('a user has connected')
+
+  ws.on('message', msg => {
+    store()
+  })
+})
+
+function modifier (action, state) {
+  switch (action.type) {
+    case 'room:create':
+      return Object.assign(state, {
+        rooms: state.rooms.push(action.roomName)
+      })
+
+    default:
+      return state
+  }
+}
 // include dependencies
-const express = require('express');
+const st = require('express');
 const httpFactory = require('http');
 const ioFactory = require('socket.io');
 const randomColor = require('randomcolor');
